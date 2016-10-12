@@ -1,0 +1,18 @@
+{
+	"preset": "jquery",
+	"maximumLineLength": 150,
+	"disallowMixedSpacesAndTabs": true,
+	"requireSpacesInsideParentheses": null,
+	"disallowSpacesInFunctionExpression": null,
+	"disallowSpacesInAnonymousFunctionExpression": null,
+	"disallowSpacesInsideParentheses": true,
+	"disallowSpacesInCallExpression": true,
+	"requireSpacesInFunctionExpression": {
+		"beforeOpeningRoundBrace": true,
+		"beforeOpeningCurlyBrace": true
+	},
+	"requireSpacesInAnonymousFunctionExpression": {
+		"beforeOpeningRoundBrace": true,
+		"beforeOpeningCurlyBrace": true
+	}
+}

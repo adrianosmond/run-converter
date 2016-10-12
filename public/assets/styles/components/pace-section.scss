@@ -1,0 +1,13 @@
+@import "../variables";
+
+.pace-section {
+	font-size: #{(2/3)}rem;
+	user-select: none;
+
+	&__heading {
+		letter-spacing: 0;
+		padding-bottom: 0.5em;
+		margin-bottom: 0.5em;
+		border-bottom: 1px solid $white--30;
+	}
+}
