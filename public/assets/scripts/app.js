@@ -29,12 +29,16 @@ document.addEventListener("DOMContentLoaded", function () {
 		data: {
 			paceKmMins: 5,
 			paceKmSecs: 0,
-			maxPaceKmMins: 20,
+			minPaceKmMins: 2,
+			minPaceKmSecs: 0,
+			maxPaceKmMins: 15,
 			maxPaceKmSecs: 0,
 			paceMiMins: 8,
 			paceMiSecs: 2,
-			maxPaceMiMins: 32,
-			maxPaceMiSecs: 11
+			maxPaceMiMins: 24,
+			maxPaceMiSecs: 9,
+			minPaceMiMins: 3,
+			minPaceMiSecs: 13
 		},
 		methods: {
 			increaseSpeedKm: function (diff) {
@@ -44,9 +48,9 @@ document.addEventListener("DOMContentLoaded", function () {
 					this.paceKmMins--;
 					this.paceKmSecs = (this.paceKmSecs - diff + 60);
 				}
-				if (this.paceKmMins <= 0) {
-					this.paceKmMins = 0;
-					this.paceKmSecs = 0;
+				if (this.paceKmMins < this.minPaceKmMins || this.paceKmMins === this.minPaceKmMins && this.paceKmSecs < this.minPaceKmSecs) {
+					this.paceKmMins = this.minPaceKmMins;
+					this.paceKmSecs = this.minPaceKmSecs;
 				}
 				this.updatePaceMi();
 			},
@@ -76,9 +80,8 @@ document.addEventListener("DOMContentLoaded", function () {
 					this.paceMiMins--;
 					this.paceMiSecs = (this.paceMiSecs - diff + 60);
 				}
-				if (this.paceMiMins <= 0) {
-					this.paceMiMins = 0;
-					this.paceMiSecs = 0;
+				if (this.paceMiMins <= this.minPaceMiMins && this.paceMiSecs <= this.minPaceMiSecs) {
+					this.paceMiSecs = this.minPaceMiSecs;
 				}
 				this.updatePaceKm();
 			},

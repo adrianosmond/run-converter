@@ -205,7 +205,7 @@ function notifyBrowserSync(details, duration, pre) {
 		msg += "</div>";
 		if (pre) msg += "</pre>";
 		browserSync.notify(msg, duration);
-	}, 500);
+	}, 1000);
 }
 
 function walkDirectoryTree(currentPath) {
