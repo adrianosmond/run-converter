@@ -47,8 +47,6 @@ gulp.task("serve", ["html", "sass", "js", "copy-images"], function () {
 	});
 });
 
-gulp.task("fix-sass-style", ["fix-sass-style"]);
-
 gulp.task("fix-js-style", ["fix-js-style"]);
 
 gulp.task("clean", function () {
@@ -137,9 +135,9 @@ gulp.task("sass", function () {
 });
 
 gulp.task("fix-sass-style", function () {
-	return gulp.src("./public/**/*.scss")
+	return gulp.src("./public/assets/styles/**/*.scss")
 		.pipe(stylefmt())
-		.pipe(gulp.dest("./public/assets/scripts/"))
+		.pipe(gulp.dest("./public/assets/styles/"))
 });
 
 gulp.task("js", function () {
@@ -190,6 +188,8 @@ gulp.task("fix-js-style", function () {
 		.pipe(gulp.dest("./public/assets/scripts/"))
 		.pipe(jscs.reporter())
 });
+
+gulp.task("fix-code-style", ["fix-sass-style", "fix-js-style"]);
 
 function notifyBrowserSync(details, duration, pre) {
 	setTimeout(function () {
