@@ -139,6 +139,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		var threshold = 3;
 		var increaseFn;
 		var decreaseFn;
+		var diff;
 
 		el.addEventListener("touchstart", function (e) {
 			lastY = e.changedTouches[ 0 ].pageY;
@@ -154,32 +155,60 @@ document.addEventListener("DOMContentLoaded", function () {
 		el.addEventListener("touchmove", function (e) {
 			e.preventDefault();
 			var newY = e.changedTouches[ 0 ].pageY;
-			var diff = newY - lastY;
+			diff = newY - lastY;
 			lastY =  newY;
 
-			if (diff > 0) {
-				diff = Math.ceil(diff);
-				diffSinceUpdate += diff;
-				if (diffSinceUpdate > threshold) {
-					increaseFn(Math.floor(diffSinceUpdate / threshold));
-					diffSinceUpdate = 0;
-				}
-			} else if (diff < 0) {
-				diff *= -1;
-				diff = Math.ceil(diff);
-				diffSinceUpdate -= diff;
-				if (diffSinceUpdate < -threshold) {
-					decreaseFn(Math.floor(diffSinceUpdate / -threshold));
-					diffSinceUpdate = 0;
-				}
-			}
+			update(diff, increaseFn, decreaseFn);
 		});
 
 		document.addEventListener("touchmove", function (e) {
 			e.preventDefault();
 		});
 
+		function update(diff, inc, dec) {
+			if (diff > 0) {
+				diff = Math.ceil(diff);
+				diffSinceUpdate += diff;
+				if (diffSinceUpdate > threshold) {
+					var d = Math.floor(diffSinceUpdate / threshold);
+					inc(d);
+					diffSinceUpdate -= d;
+				}
+			} else if (diff < 0) {
+				diff *= -1;
+				diff = Math.ceil(diff);
+				diffSinceUpdate -= diff;
+				if (diffSinceUpdate < -threshold) {
+					var d = Math.floor(diffSinceUpdate / -threshold);
+					dec(d);
+					diffSinceUpdate += d;
+				}
+			}
+		}
+
+		function rampDown(inc, dec) {
+			diff *= 0.90;
+
+			if (Math.abs(diff) >= 2) {
+				update(diff, inc, dec);
+				window.setTimeout(function () {
+					rampDown(inc, dec);
+				}, 150 / (Math.abs(diff)));
+			} else {
+				window.setTimeout(function () {
+					if (diff < 0) {
+						dec(1);
+					} else {
+						inc(1);
+					}
+				}, 50);
+			}
+		}
+
 		el.addEventListener("touchend", function (e) {
+			if (Math.abs(diff) > 3) {
+				rampDown(increaseFn, decreaseFn);
+			}
 			lastY = undefined;
 			increaseFn = undefined;
 			decreaseFn = undefined;
