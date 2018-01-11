@@ -1,4 +1,4 @@
-# Run-converter
+# Run Converter
 
 A tool I made for myself to quickly convert between pace per kilometer (which I use) and pace per mile (which is used by lots of British runners I know) so that I could know what they're talking about. I also wanted a thing to try Vue.js on.
 
